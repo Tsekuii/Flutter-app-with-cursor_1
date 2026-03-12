@@ -4,7 +4,6 @@ import 'package:uuid/uuid.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/models/question_model.dart';
 import '../blocs/quiz_create/quiz_create_bloc.dart';
-import '../widgets/app_bottom_nav.dart';
 import 'add_question_sheet.dart';
 
 class CreateQuizPage extends StatefulWidget {
@@ -144,7 +143,6 @@ class _CreateQuizPageState extends State<CreateQuizPage> {
           },
         ),
       ),
-      bottomNavigationBar: const AppBottomNav(),
     );
   }
 
@@ -235,7 +233,7 @@ class _QuestionTile extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.close, color: AppTheme.errorRed, size: 22),
+              icon: Icon(Icons.close, color: AppTheme.errorRed, size: 22),
               onPressed: onRemove,
             ),
           ],

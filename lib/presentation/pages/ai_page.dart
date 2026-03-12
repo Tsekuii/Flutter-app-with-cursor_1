@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
-import '../widgets/app_bottom_nav.dart';
-
 class AiPage extends StatelessWidget {
   const AiPage({super.key});
 
@@ -84,7 +82,6 @@ class AiPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const AppBottomNav(),
     );
   }
 }

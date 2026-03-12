@@ -209,7 +209,7 @@ class _SignUpForm extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         DropdownButtonFormField<int>(
-          value: selectedClass,
+          initialValue: selectedClass,
           decoration: const InputDecoration(labelText: 'Анги'),
           items: List.generate(
             AppConstants.maxClass - AppConstants.minClass + 1,

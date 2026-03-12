@@ -114,7 +114,7 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
           child: LinearProgressIndicator(
             value: progress,
             backgroundColor: AppTheme.surfaceVariant,
-            valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.accentCyan),
+            valueColor: AlwaysStoppedAnimation<Color>(AppTheme.accentCyan),
           ),
         ),
       ),
@@ -165,10 +165,10 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
                               children: [
                                 Text(
                                   String.fromCharCode(0x41 + i),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppTheme.accentCyan,
-                                  ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppTheme.accentCyan,
+                                ),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(child: Text(q.options[i])),

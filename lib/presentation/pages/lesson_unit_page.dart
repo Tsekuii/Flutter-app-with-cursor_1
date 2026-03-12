@@ -66,7 +66,7 @@ class _UnitCard extends StatelessWidget {
           backgroundColor: AppTheme.accentCyan.withValues(alpha: 0.2),
           child: Text(
             '${unit.unitNumber}',
-            style: const TextStyle(
+            style: TextStyle(
               color: AppTheme.accentCyan,
               fontWeight: FontWeight.bold,
             ),

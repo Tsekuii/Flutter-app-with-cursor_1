@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
 import '../blocs/auth/auth_bloc.dart';
 import '../blocs/profile/profile_bloc.dart';
 import '../blocs/settings/settings_cubit.dart';
-import '../widgets/app_bottom_nav.dart';
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -85,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               value: (user.xp % 1000) / 1000,
                               minHeight: 8,
                               backgroundColor: AppTheme.surfaceVariant,
-                              valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.warningYellow),
+                              valueColor: AlwaysStoppedAnimation<Color>(AppTheme.warningYellow),
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -185,11 +182,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       _SettingsSection(),
                   ],
                 ),
-              ),
-            ),
-          ),
+              );
+          },
         ),
-      bottomNavigationBar: const AppBottomNav(),
+      ),
     );
   }
 

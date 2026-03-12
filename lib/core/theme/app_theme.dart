@@ -9,7 +9,6 @@ class AppTheme {
   static const Color _surfaceDark = Color(0xFF161B22);
   static const Color _surfaceVariant = Color(0xFF21262D);
   static const Color _accentCyan = Color(0xFF58A6FF);
-  static const Color _accentCyanDim = Color(0xFF388BFD);
   static const Color _accentPurple = Color(0xFFA371F7);
   static const Color _successGreen = Color(0xFF3FB950);
   static const Color _errorRed = Color(0xFFF85149);
@@ -37,7 +36,7 @@ class AppTheme {
         foregroundColor: _textPrimary,
         elevation: 0,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: _surfaceVariant,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -114,7 +113,7 @@ class AppTheme {
         foregroundColor: Color(0xFF1F2328),
         elevation: 0,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

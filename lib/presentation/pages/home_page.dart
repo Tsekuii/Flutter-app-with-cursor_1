@@ -6,43 +6,54 @@ import '../../core/utils/responsive.dart';
 import '../../data/models/subject_model.dart';
 import '../blocs/auth/auth_bloc.dart';
 import '../blocs/lesson/lesson_bloc.dart';
-import '../widgets/app_bottom_nav.dart';
 import 'auth_page.dart';
 import 'lesson_unit_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _lessonLoaded = false;
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => context.read<LessonBloc>()..add(LessonClassSelected(10)),
-      child: Scaffold(
-        body: SafeArea(
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, authState) {
-              if (authState.status == AuthStatus.unauthenticated) {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const AuthPage()),
-                );
-              }
-            },
-            builder: (context, authState) {
-              if (authState.status != AuthStatus.authenticated && authState.status != AuthStatus.initial) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (authState.status == AuthStatus.initial) {
-                context.read<AuthBloc>().add(AuthCheckRequested());
-                return const Center(child: CircularProgressIndicator());
-              }
-              return _HomeBody(
-                userName: authState.user?.displayName ?? 'Хэрэглэгч',
-                classGrade: authState.user?.classGrade ?? 10,
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, authState) {
+            if (authState.status == AuthStatus.unauthenticated) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const AuthPage()),
               );
-            },
-          ),
+            }
+          },
+          builder: (context, authState) {
+            if (authState.status != AuthStatus.authenticated && authState.status != AuthStatus.initial) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (authState.status == AuthStatus.initial) {
+              context.read<AuthBloc>().add(AuthCheckRequested());
+              return const Center(child: CircularProgressIndicator());
+            }
+            final user = authState.user;
+            if (user != null && !_lessonLoaded) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!_lessonLoaded && context.mounted) {
+                  _lessonLoaded = true;
+                  context.read<LessonBloc>().add(LessonClassSelected(user.classGrade));
+                }
+              });
+            }
+            return _HomeBody(
+              userName: user?.displayName ?? 'Хэрэглэгч',
+              classGrade: user?.classGrade ?? 10,
+            );
+          },
         ),
-        bottomNavigationBar: const AppBottomNav(),
       ),
     );
   }

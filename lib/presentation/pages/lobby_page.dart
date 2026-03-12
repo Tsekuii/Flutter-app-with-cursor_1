@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/models/lobby_model.dart' show LobbyModel, LobbyStatus;
 import '../blocs/lobby/lobby_bloc.dart';
-import '../widgets/app_bottom_nav.dart';
-
 class LobbyPage extends StatefulWidget {
   const LobbyPage({super.key});
 
@@ -113,7 +111,6 @@ class _LobbyPageState extends State<LobbyPage> {
           },
         ),
       ),
-      bottomNavigationBar: const AppBottomNav(),
     );
   }
 }
@@ -172,7 +169,6 @@ class _LobbyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLive = lobby.status == LobbyStatus.live;
-    final isUpcoming = lobby.status == LobbyStatus.upcoming;
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -281,7 +277,7 @@ class _CreateLobbyFormState extends State<_CreateLobbyForm> {
         ),
         const SizedBox(height: 12),
         DropdownButtonFormField<String>(
-          value: 'saved',
+          initialValue: 'saved',
           decoration: const InputDecoration(labelText: 'Хичээлээс сонгох'),
           items: const [
             DropdownMenuItem(value: 'saved', child: Text('Хадгалсан Quiz-үүдээс сонгох')),
@@ -303,7 +299,7 @@ class _CreateLobbyFormState extends State<_CreateLobbyForm> {
             Expanded(
               flex: 1,
               child: DropdownButtonFormField<bool>(
-                value: _isPrivate,
+                initialValue: _isPrivate,
                 decoration: const InputDecoration(labelText: 'Төрөл'),
                 items: const [
                   DropdownMenuItem(value: false, child: Text('Нээлттэй')),
