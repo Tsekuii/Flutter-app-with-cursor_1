@@ -81,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: LinearProgressIndicator(
                               value: (user.xp % 1000) / 1000,
                               minHeight: 8,
-                              backgroundColor: AppTheme.surfaceVariant,
+                              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                               valueColor: AlwaysStoppedAnimation<Color>(AppTheme.warningYellow),
                             ),
                           ),
@@ -237,8 +237,9 @@ class _ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Material(
-      color: selected ? AppTheme.accentCyan : AppTheme.surfaceVariant,
+      color: selected ? scheme.primary : scheme.surfaceContainerHighest,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -249,13 +250,13 @@ class _ProfileTab extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (icon != null) ...[
-                Icon(icon, size: 20, color: selected ? Colors.white : null),
+                Icon(icon, size: 20, color: selected ? scheme.onPrimary : null),
                 const SizedBox(width: 8),
               ],
               Text(
                 label,
                 style: TextStyle(
-                  color: selected ? Colors.white : null,
+                  color: selected ? scheme.onPrimary : null,
                   fontWeight: selected ? FontWeight.w600 : null,
                 ),
               ),
@@ -359,8 +360,9 @@ class _SettingsChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Material(
-      color: selected ? AppTheme.accentCyan : AppTheme.surfaceVariant,
+      color: selected ? scheme.primary : scheme.surfaceContainerHighest,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -370,7 +372,7 @@ class _SettingsChip extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              color: selected ? Colors.white : null,
+              color: selected ? scheme.onPrimary : null,
               fontWeight: selected ? FontWeight.w600 : null,
             ),
           ),

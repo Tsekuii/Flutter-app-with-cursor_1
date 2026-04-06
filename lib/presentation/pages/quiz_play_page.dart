@@ -85,7 +85,7 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Хаах'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -101,6 +101,7 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
   Widget build(BuildContext context) {
     final q = _questions[_currentIndex];
     final progress = (_currentIndex + 1) / _questions.length;
+    final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -113,8 +114,8 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
           preferredSize: const Size.fromHeight(4),
           child: LinearProgressIndicator(
             value: progress,
-            backgroundColor: AppTheme.surfaceVariant,
-            valueColor: AlwaysStoppedAnimation<Color>(AppTheme.accentCyan),
+            backgroundColor: scheme.surfaceContainerHighest,
+            valueColor: AlwaysStoppedAnimation<Color>(scheme.primary),
           ),
         ),
       ),
@@ -130,7 +131,7 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
                     icon: const Icon(Icons.volume_up_rounded),
                     onPressed: () {},
                   ),
-                  const Text('Сонсох', style: TextStyle(fontSize: 12)),
+                  Text('Сонсох', style: Theme.of(context).textTheme.labelMedium),
                 ],
               ),
               const SizedBox(height: 16),
@@ -144,34 +145,62 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
                   itemCount: q.options.length,
                   itemBuilder: (context, i) {
                     Color? bg;
+                    Color? borderColor;
                     if (_showFeedback) {
                       if (i == q.correctOptionIndex) {
-                        bg = AppTheme.successGreen.withValues(alpha: 0.3);
+                        bg = AppTheme.successGreen.withValues(alpha: 0.28);
+                        borderColor = AppTheme.successGreen.withValues(alpha: 0.6);
                       } else if (i == _selectedIndex && !_isCorrect) {
-                        bg = AppTheme.errorRed.withValues(alpha: 0.3);
+                        bg = AppTheme.errorRed.withValues(alpha: 0.28);
+                        borderColor = AppTheme.errorRed.withValues(alpha: 0.55);
                       }
                     }
+                    final letter = String.fromCharCode(0x41 + i);
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Material(
-                        color: bg ?? AppTheme.surfaceVariant,
-                        borderRadius: BorderRadius.circular(12),
+                        color: bg ?? scheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(16),
                         child: InkWell(
                           onTap: () => _onAnswerSelected(i),
-                          borderRadius: BorderRadius.circular(12),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                          borderRadius: BorderRadius.circular(16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: borderColor ?? scheme.outline.withValues(alpha: 0.35),
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                             child: Row(
                               children: [
-                                Text(
-                                  String.fromCharCode(0x41 + i),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppTheme.accentCyan,
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: scheme.primary.withValues(alpha: 0.2),
+                                    border: Border.all(
+                                      color: scheme.primary.withValues(alpha: 0.45),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    letter,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: scheme.primary,
+                                    ),
+                                  ),
                                 ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Text(
+                                    q.options[i],
+                                    style: Theme.of(context).textTheme.bodyLarge,
+                                  ),
                                 ),
-                                const SizedBox(width: 12),
-                                Expanded(child: Text(q.options[i])),
                               ],
                             ),
                           ),
@@ -190,6 +219,9 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
                         ? AppTheme.successGreen.withValues(alpha: 0.2)
                         : AppTheme.errorRed.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: (_isCorrect ? AppTheme.successGreen : AppTheme.errorRed).withValues(alpha: 0.35),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +251,7 @@ class _QuizPlayPageState extends State<QuizPlayPage> {
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: FilledButton(
                     onPressed: _next,
                     child: Text(_currentIndex + 1 >= _questions.length ? 'Дуусгах' : 'Дараагийн'),
                   ),
